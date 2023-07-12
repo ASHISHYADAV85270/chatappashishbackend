@@ -1,4 +1,13 @@
-import jwt from 'jsonwebtoken';
+// app.use(cors()); //jis sai dusrai server sai excess kr skai 
+app.use(
+    cors({
+        origin: [process.env.FRONTEND_URL], //jooo url iffsai excess krskta hai
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,  //iskoo true krna hota jis sai cookies dusrai url sai share kr skai
+    })
+);
+
+
 
 export const sendCookie = (user, res, message, statusCode = 200) => {
     const token = jwt.sign({ _id: user }, process.env.JWT_SECRET)
@@ -15,10 +24,9 @@ export const sendCookie = (user, res, message, statusCode = 200) => {
         });
 }
 
-
-
-/*
-lax and strict are almost same ->cookie ecxess broken hoga 
-none is used jb hmmm app bnaa rhai hai 
-agr kuch nhi dia to boo bydefault lax hoga ab according to web new policy
-*/
+    
+      const data = await axios.post(
+        url,
+        { selectedAvatar },
+        { withCredentials: true } //to excess token and send token data to backend
+      );

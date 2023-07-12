@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import { userModel } from '../model/userModel.js';
 import { sendCookie } from '../utils/features.js';
-
 export async function RegisterUser(req, res, next) {
     try {
         const { username, useremail, userpassword } = req.body;
@@ -34,18 +33,16 @@ export async function LoginUser(req, res, next) {
         }
     } catch (error) {
         console.log(error);
-
         return res.status(201).json({ success: false, message: "Some Error" });
     }
 }
 
 
 export async function setavatar(req, res, next) {
+    const token = req.cookies?.token;
+    console.log({ token });
     const { selectedAvatar } = req.body;
     const avataImage = selectedAvatar;
     console.log({ avataImage });
-    console.log(req.cookies);
-    const { token } = req.cookies;
-    console.log({ token });
     return res.status(201).json({ success: true, message: "User created" });
 }

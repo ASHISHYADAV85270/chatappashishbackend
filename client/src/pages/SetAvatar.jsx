@@ -21,7 +21,11 @@ function SetAvatar() {
     }
 
     try {
-      const data = await axios.post(url, { selectedAvatar });
+      const data = await axios.post(
+        url,
+        { selectedAvatar },
+        { withCredentials: true } //to excess token and send token data to backend
+      );
       console.log(data);
     } catch (error) {
       console.log(error);

@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 const Login = () => {
-  const navigate = useNavigate();
   const [buttonDisabled, setButtonDisable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
