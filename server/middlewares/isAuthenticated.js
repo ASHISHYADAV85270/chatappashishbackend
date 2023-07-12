@@ -1,20 +1,25 @@
-import { UserModel } from '../models/User.js';
+import { userModel } from '../model/userModel.js';
 import jwt from 'jsonwebtoken';
 
 export const isAuthenticated = async (req, res, next) => {
+    const token = req.cookies?.token;
+    if (!token) {
+        console.log("login first")
+        return res.status(201).json({
+            success: false,
+            message: "Login First",
+        });
+    }
     try {
-        const id = "myid";
-        const { token } = req.cookies;
-        if (!token) {
-            return res.status(404).json({
-                success: false,
-                message: "Login First",
-            })
-        }
         const decodedId = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await UserModel.findById(decodedId);
-        next();
+        const userid = decodedId._id._id;
+        const user = await userModel.findById(userid);
+        if (user) {
+            req.user = user;
+            console.log(req.user);
+            next();
+        }
     } catch (error) {
-        console.log(error);
+        console.log("Hi i am authenticted error", error);
     }
 }

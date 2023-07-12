@@ -39,10 +39,10 @@ export async function LoginUser(req, res, next) {
 
 
 export async function setavatar(req, res, next) {
-    const token = req.cookies?.token;
-    console.log({ token });
-    const { selectedAvatar } = req.body;
-    const avataImage = selectedAvatar;
-    console.log({ avataImage });
-    return res.status(201).json({ success: true, message: "User created" });
+    const userid = req.user._id;
+    const isAvataImageSet = true;
+    const avataImage = req.body.avatars[0];
+
+    const user = await userModel.findByIdAndUpdate(userid, { isAvataImageSet, avataImage });
+    return res.status(201).json({ success: true, message: "User Avatar Updated" });
 }

@@ -12,10 +12,10 @@ function SetAvatar() {
   // for setting avatar
   const [avatars, setAvatars] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   const setProfilePicture = async () => {
-    if (selectedAvatar === "") {
+    if (selectedAvatar === undefined) {
       toast.error("Please Select a Avatar");
       return;
     }
@@ -23,10 +23,14 @@ function SetAvatar() {
     try {
       const data = await axios.post(
         url,
-        { selectedAvatar },
+        { image: avatars[selectedAvatar] },
         { withCredentials: true } //to excess token and send token data to backend
       );
-      console.log(data);
+      if (data.data.success) {
+        toast.success("set your avatar");
+      } else {
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -67,11 +71,12 @@ function SetAvatar() {
             {avatars.map((avatar, index) => {
               return (
                 <div
-                  className={`${
+                  className={`  ${
                     selectedAvatar === index
-                      ? " border-[#4e0eff] border-[0.4rem] rounded-full  "
+                      ? " border-[#4e0eff] border-[0.4rem] rounded-full"
                       : ""
                   }`}
+                  id={index}
                 >
                   <img
                     src={`data:image/svg+xml;base64,${avatar}`}
