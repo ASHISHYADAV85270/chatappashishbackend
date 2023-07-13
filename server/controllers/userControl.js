@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import { userModel } from '../model/userModel.js';
 import { sendCookie } from '../utils/features.js';
+import jwt from 'jsonwebtoken';
+
 export async function RegisterUser(req, res, next) {
     try {
         const { username, useremail, userpassword } = req.body;
@@ -39,10 +41,32 @@ export async function LoginUser(req, res, next) {
 
 
 export async function setavatar(req, res, next) {
-    const userid = req.user._id;
+    const token = req.cookies?.token;
+    const avataImage = req.body?.image;
     const isAvataImageSet = true;
-    const avataImage = req.body.avatars[0];
+    if (!token) {
+        return res.json({ success: false });
+    }
+    try {
+        const decodedId = jwt.verify(token, process.env.JWT_SECRET);
+        let user = await userModel.findByIdAndUpdate(decodedId, { isAvataImageSet, avataImage });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Some Error Avatar Not  Updated" });
+        }
+        return res.status(201).json({ success: true, message: "User Avatar Updated" });
+    } catch (error) {
+        return res.status(201).json({ success: false, message: "Some Error" });
+    }
+}
 
-    const user = await userModel.findByIdAndUpdate(userid, { isAvataImageSet, avataImage });
-    return res.status(201).json({ success: true, message: "User Avatar Updated" });
+
+export async function getAllUsers(req, res, next) {
+    try {
+        const users = await userModel.find({ _id: { $ne: req.params.id } });
+        console.log(req.params.id);
+        // console.log(users)
+        return res.json({ success: true });
+    } catch (ex) {
+        next(ex);
+    }
 }

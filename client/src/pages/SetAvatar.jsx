@@ -5,8 +5,8 @@ import { toast, Toaster } from "react-hot-toast";
 import loader from "../assets/loader.gif";
 import { Buffer } from "buffer";
 function SetAvatar() {
-  const url = "http://localhost:5000/api/auth/setavatar";
   const api_route_for_images = "https://api.multiavatar.com/54433"; //for getting random images
+  const AVATARKEY = `?apikey=J5WSeU29gVFq16`;
   const navigate = useNavigate();
 
   // for setting avatar
@@ -15,26 +15,49 @@ function SetAvatar() {
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   const setProfilePicture = async () => {
-    if (selectedAvatar === undefined) {
-      toast.error("Please Select a Avatar");
-      return;
-    }
-
     try {
+      if (selectedAvatar === undefined) {
+        toast.error("Please Select a Avatar");
+        return;
+      }
+      const url = "http://localhost:5000/api/auth/setavatar";
       const data = await axios.post(
         url,
         { image: avatars[selectedAvatar] },
         { withCredentials: true } //to excess token and send token data to backend
       );
+      console.log("helllo bhaitw");
+      console.log(data.data);
       if (data.data.success) {
-        toast.success("set your avatar");
+        toast.success(data.data.message);
+        navigate("/");
       } else {
+        toast.error(data.data.message);
         navigate("/login");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("error in the setavatar calling");
+      navigate("/login");
     }
   };
+
+  /* for checking user is there or not*/
+  const authurl = "http://localhost:5000/api/auth/checkauth";
+  const [currentUser, setCurruser] = useState(undefined);
+  useEffect(() => {
+    const checkauth = async () => {
+      const data = await axios.post(authurl, {}, { withCredentials: true });
+      if (data.data.success) {
+        setCurruser(data.data.user);
+        toast.success(`welcome back `);
+      } else {
+        toast.error("Login First");
+        navigate("/login");
+      }
+    };
+    checkauth();
+  }, []);
+  /**** */
 
   useEffect(() => {
     const getimagesdata = async () => {
@@ -43,19 +66,24 @@ function SetAvatar() {
         setLoading(true);
         for (let i = 0; i < 5; i++) {
           const x = Math.round(Math.random() * 1000);
-          const avatarImage = await axios.get(`${api_route_for_images}${x}`);
+          const avatarImage = await axios.get(
+            `${api_route_for_images}${x}${AVATARKEY}`
+          );
           const buffer = new Buffer(avatarImage.data);
           const stringimagedata = buffer.toString("base64");
           data.push(stringimagedata);
         }
         setAvatars(data);
-        setLoading(false);
       } catch (error) {
-        console.log(error);
+        toast.error("Some error please try again");
+        navigate("/login");
+        // console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     getimagesdata();
-  }, []);
+  }, [currentUser]);
 
   return (
     <div className=" h-[100vh] bg-c1 flex flex-col items-center justify-center gap-9 w-[100vw]">
