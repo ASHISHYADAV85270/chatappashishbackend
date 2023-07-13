@@ -20,7 +20,7 @@ const Contacts = ({ currcontacts, currentUser, changeChat }) => {
   return (
     <>
       {currentUserName && currentUserImage && (
-        <div className="grid grid-flow-row  grid-rows-[10%,77%,15%]  gap-[0.4rem] h-full">
+        <div className="grid grid-flow-row  grid-rows-[10%,77%,15%]  gap-[0.4rem] h-full  w-full">
           <div className="brand flex flex-row items-center justify-center gap-[0.5rem] ">
             <img src={logo} alt="logo" className="h-[2rem]" />
             <h3 className="uppercase text-c3">snappy</h3>
@@ -68,7 +68,7 @@ const Contacts = ({ currcontacts, currentUser, changeChat }) => {
             })}
           </div>
           <div>
-            <div className="flex  gap-3 justify-center items-center  ">
+            <div className="flex  gap-3 justify-center items-center p-3">
               <img
                 src={`data:image/svg+xml;base64,${currentUserImage}`}
                 alt=""

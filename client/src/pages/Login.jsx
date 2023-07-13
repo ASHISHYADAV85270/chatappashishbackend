@@ -27,6 +27,7 @@ const Login = () => {
     setLoading(true);
     try {
       const url = "http://localhost:5000/api/auth/login";
+      // console.log("i ma gh");
       const { username, useremail, userpassword } = user;
       let { data } = await axios.post(
         url,
