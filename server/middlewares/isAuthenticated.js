@@ -31,14 +31,11 @@ export const checkauth = async (req, res) => {
     }
     try {
         const decodedId = jwt.verify(token, process.env.JWT_SECRET);
-        // const userid = decodedId._id._id;
-
-        // console.log(decodedId);
         const user = await userModel.findById(decodedId);
         if (!user) {
             return res.json({ success: false });
         }
-        return res.json({ success: true })
+        return res.json({ success: true, user })
     } catch (error) {
         return res.json({ success: false });
     }

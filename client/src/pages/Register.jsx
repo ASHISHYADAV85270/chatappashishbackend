@@ -51,6 +51,7 @@ const Register = () => {
         return navigate("/setavatar");
       } else {
         toast.error(data.message);
+        navigate("/login");
       }
     } catch (error) {
       toast.error(error.message);

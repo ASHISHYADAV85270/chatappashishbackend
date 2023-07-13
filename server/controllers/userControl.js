@@ -12,7 +12,7 @@ export async function RegisterUser(req, res, next) {
         }
         const hashedpassword = await bcrypt.hash(userpassword, 10);
         user = await userModel.create({ username, useremail, userpassword: hashedpassword });
-        return res.status(201).json({ success: true, message: "User created" });
+        return sendCookie(user, res, "Registered  Successfully", 200);
     } catch (error) {
         console.log(error);
     }
@@ -62,10 +62,9 @@ export async function setavatar(req, res, next) {
 
 export async function getAllUsers(req, res, next) {
     try {
-        const users = await userModel.find({ _id: { $ne: req.params.id } });
-        console.log(req.params.id);
-        // console.log(users)
-        return res.json({ success: true });
+        const otherusers = await userModel.find({ _id: { $ne: req.params.id } });
+
+        return res.json({ success: true, otherusers });
     } catch (ex) {
         next(ex);
     }

@@ -49,7 +49,6 @@ function SetAvatar() {
       const data = await axios.post(authurl, {}, { withCredentials: true });
       if (data.data.success) {
         setCurruser(data.data.user);
-        toast.success(`welcome back `);
       } else {
         toast.error("Login First");
         navigate("/login");
