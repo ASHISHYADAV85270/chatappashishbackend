@@ -55,12 +55,22 @@ const Chat = () => {
     settingusers();
   }, [currentUser]);
 
+  const handlechatchange = (currChat) => {
+    //currChat contain data of user selected on contact bar
+    // console.log("gi");
+    // console.log(currChat);
+    // setCurruser(currChat);
+  };
   return (
     <>
       <div className="h-[100vh] bg-c1 w-[100vw] flex flex-col justify-center gap-3 items-center">
         <div className="container h-[85vh] w-[85vw] bg-blue-600 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 ">
           <div className="w-1/4 bg-c5  overflow-hidden">
-            <Contacts currcontacts={currcontacts} currentUser={currentUser} />
+            <Contacts
+              currcontacts={currcontacts}
+              currentUser={currentUser}
+              changeChat={handlechatchange}
+            />
           </div>
           <div className="w-3/4">hi</div>
         </div>
