@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
@@ -76,7 +76,6 @@ function SetAvatar() {
       } catch (error) {
         toast.error("Some error please try again");
         navigate("/login");
-        // console.log(error);
       } finally {
         setLoading(false);
       }
