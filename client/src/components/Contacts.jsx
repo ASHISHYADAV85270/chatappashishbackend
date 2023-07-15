@@ -29,32 +29,14 @@ const Contacts = ({ currcontacts, currentUser, changeChat }) => {
             {currcontacts?.map((contact, index) => {
               return (
                 <div
-                  className={`flex flex-row items-center gap-[1rem]  min-h-[5rem] cursor-pointer w-[95%]  p-[0.4rem]  transition duration-500 ease-in-out bg-gray-700 border-[0.02rem] rounded-md ${
+                  className={`flex flex-row items-center gap-[1rem]  min-h-[5rem] cursor-pointer w-[95%]  p-[0.4rem]  transition duration-500 ease-in-out bg-gray-700 border-[0.02rem] rounded-md  ${
                     index === currentSelected ? "bg-[#638b95] " : ""
                   }  `}
-                  key={contact._id}
+                  key={index}
                   onClick={() => {
-                    changecurrChatandIndex(index, contact);
-                  }}
-                >
-                  <img
-                    src={`data:image/svg+xml;base64,${contact?.avataImage}`}
-                    alt="avatar"
-                    className="h-[3rem]"
-                  />
-                  <h3 className="uppercase">{contact?.username}</h3>
-                </div>
-              );
-            })}
-            {currcontacts?.map((contact, index) => {
-              return (
-                <div
-                  className={`flex flex-row items-center gap-[1rem]  min-h-[5rem] cursor-pointer w-[95%]  p-[0.4rem]  transition duration-500 ease-in-out bg-gray-700 border-[0.02rem] ${
-                    index === currentSelected ? "bg-[#638b95]" : ""
-                  }  `}
-                  key={contact._id}
-                  onClick={() => {
+                    console.log("Clicked contact index:", index);
                     setCurrentSelected(index);
+                    console.log({ currentSelected });
                   }}
                 >
                   <img

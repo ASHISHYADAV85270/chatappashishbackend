@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+import ChatBox from "../components/ChatBox";
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -57,7 +58,10 @@ const Chat = () => {
   }, [currentUser]);
 
   const handlechatchange = (currChat) => {
+    setLoading(true);
     setCurrentChat(currChat);
+    setLoading(false);
+    console.log(currentChat);
   };
   return (
     <>
@@ -71,7 +75,11 @@ const Chat = () => {
             />
           </div>
           <div className="w-[66.5vw]">
-            <Welcome currentUser={currentUser} />
+            {currentChat === undefined ? (
+              <Welcome currentUser={currentUser} />
+            ) : (
+              !loading && <ChatBox currentChat={currentChat} />
+            )}
           </div>
         </div>
       </div>

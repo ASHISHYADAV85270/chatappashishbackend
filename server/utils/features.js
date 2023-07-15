@@ -5,7 +5,7 @@ export const sendCookie = (user, res, message, statusCode = 200) => {
     return res.status(statusCode)
         .cookie("token", token, {
             httpOnly: true,  //it avoids using cookies from frontend
-            maxAge: 15 * 60 * 1000,
+            maxAge: 60 * 60 * 1000,
             sameSite: "none", //koi bhi site excess kr skti hai
             secure: true, //necessary for sending cookie    
         })
