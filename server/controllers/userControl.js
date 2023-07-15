@@ -69,3 +69,10 @@ export async function getAllUsers(req, res, next) {
         next(ex);
     }
 }
+
+
+export async function logoutuser(req, res, next) {
+    req.user = null;
+    res.cookie("token", null, { maxAge: 0 });
+    return res.json({ success: true, message: "Logout Successfully" });
+}

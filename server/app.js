@@ -3,8 +3,10 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import userRouter from './routes/userRouter.js';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 
 export const app = express();
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 config({

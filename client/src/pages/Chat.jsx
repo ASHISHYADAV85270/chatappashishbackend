@@ -8,7 +8,6 @@ import ChatBox from "../components/ChatBox";
 
 const Chat = () => {
   const navigate = useNavigate();
-  // const [buttonDisabled, setButtonDisable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currcontacts, setcurrContacts] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
@@ -17,7 +16,8 @@ const Chat = () => {
   const authurl = "http://localhost:5000/api/auth/checkauth";
   const [currentUser, setCurruser] = useState(undefined);
   useEffect(() => {
-    const checkauth = async () => {
+    checkauth();
+    async function checkauth() {
       try {
         setLoading(true);
         const data = await axios.post(authurl, {}, { withCredentials: true });
@@ -34,13 +34,14 @@ const Chat = () => {
       } finally {
         setLoading(false);
       }
-    };
-    checkauth();
+    }
   }, []);
   /**** */
 
+  /***Gettin all contacts other then user */
   useEffect(() => {
-    const settingusers = async () => {
+    settingusers();
+    async function settingusers() {
       if (currentUser) {
         if (currentUser.isAvataImageSet) {
           const url = "http://localhost:5000/api/auth/allusers";
@@ -53,36 +54,34 @@ const Chat = () => {
           navigate("/setAvatar");
         }
       }
-    };
-    settingusers();
+    }
   }, [currentUser]);
 
-  const handlechatchange = (currChat) => {
-    setLoading(true);
-    setCurrentChat(currChat);
-    setLoading(false);
-    console.log(currentChat);
-  };
   return (
     <>
-      <div className="h-[100vh] bg-c1 w-[100vw] flex flex-col justify-center  items-center toooop">
-        <div className=" h-[85vh] w-[85vw]  grid  grid-flow-col bg-c5 ">
-          <div className="w-[18.5vw] overflow-hidden">
-            <Contacts
-              currcontacts={currcontacts}
-              currentUser={currentUser}
-              changeChat={handlechatchange}
-            />
-          </div>
-          <div className="w-[66.5vw]">
-            {currentChat === undefined ? (
-              <Welcome currentUser={currentUser} />
-            ) : (
-              !loading && <ChatBox currentChat={currentChat} />
-            )}
+      {loading ? (
+        <div className="text-black">Loading</div>
+      ) : (
+        <div className="h-[100vh] bg-c1 w-[100vw] flex flex-col justify-center  items-center toooop">
+          <div className=" h-[85vh] w-[85vw]  grid  grid-flow-col bg-c5 ">
+            <div className="w-[18.5vw] overflow-hidden">
+              <Contacts
+                currcontacts={currcontacts}
+                currentUser={currentUser}
+                setCurrentChat={setCurrentChat}
+              />
+            </div>
+            <div className="w-[66.5vw]">
+              {currentChat === undefined ? (
+                <Welcome currentUser={currentUser} />
+              ) : (
+                <ChatBox currentChat={currentChat} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
       <Toaster />
     </>
   );

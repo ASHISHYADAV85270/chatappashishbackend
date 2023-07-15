@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-    LoginUser, RegisterUser, setavatar, getAllUsers,
+    LoginUser, RegisterUser, setavatar, getAllUsers, logoutuser,
 } from '../controllers/userControl.js';
 import { isAuthenticated, checkauth } from '../middlewares/isAuthenticated.js';
 
@@ -10,6 +10,7 @@ router.post('/login', LoginUser); //api/auth/register
 router.post('/setavatar', setavatar);
 router.post('/checkauth', checkauth);
 router.get("/allusers/:id", getAllUsers);
+router.get('/logoutuser', logoutuser);
 
 
 export default router;  

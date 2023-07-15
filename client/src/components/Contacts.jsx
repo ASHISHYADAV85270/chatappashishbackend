@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.svg";
-const Contacts = ({ currcontacts, currentUser, changeChat }) => {
+const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [loading, setLoading] = useState(false);
 
   /********to fetch data of the chats of the user */
-
   useEffect(() => {
     setCurrentUserName(currentUser?.username);
     setCurrentUserImage(currentUser?.avataImage);
   }, [currentUser]);
 
-  const changecurrChatandIndex = (index, contact) => {
-    setCurrentSelected(index);
-    changeChat(contact);
-  };
   return (
     <>
       {currentUserName && currentUserImage && (
-        <div className="grid grid-flow-row  grid-rows-[10%,77%,15%]  gap-[0.4rem] h-full  w-full">
-          <div className="brand flex flex-row items-center justify-center gap-[0.5rem] ">
+        <div className="grid grid-flow-row  grid-rows-[11%,77%,12%]  h-full  w-full">
+          <div className="brand flex flex-row items-center justify-center gap-[0.5rem] border-solid border-c3 border-b-[0.2rem]  ">
             <img src={logo} alt="logo" className="h-[2rem]" />
             <h3 className="uppercase text-c3">snappy</h3>
           </div>
+
           <div className="contacts flex flex-col items-center overflow-auto py-5 gap-[0.4rem] bg-[#ffffff34]  justify-start  ">
             {currcontacts?.map((contact, index) => {
               return (
@@ -34,9 +30,8 @@ const Contacts = ({ currcontacts, currentUser, changeChat }) => {
                   }  `}
                   key={index}
                   onClick={() => {
-                    console.log("Clicked contact index:", index);
                     setCurrentSelected(index);
-                    console.log({ currentSelected });
+                    setCurrentChat(contact);
                   }}
                 >
                   <img
@@ -50,7 +45,7 @@ const Contacts = ({ currcontacts, currentUser, changeChat }) => {
             })}
           </div>
           <div>
-            <div className="flex  gap-3 justify-center items-center p-3">
+            <div className="flex  gap-3 justify-center items-center  mt-2 ">
               <img
                 src={`data:image/svg+xml;base64,${currentUserImage}`}
                 alt=""

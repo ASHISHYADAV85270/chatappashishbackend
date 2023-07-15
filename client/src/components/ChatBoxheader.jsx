@@ -1,17 +1,23 @@
 import React from "react";
+import Logout from "./Logout";
 
-const ChatBoxheader = ({ currentChat }) => {
-  console.log("currentChat", currentChat);
+const ChatBoxheader = ({ username, avataImage }) => {
   return (
     <div>
-      <div className="flex  gap-3 justify-center items-center p-3">
-        <img
-          src={`data:image/svg+xml;base64,${currentChat?.avataImage}`}
-          alt=""
-          className="h-[3rem]"
-        />
-        <h2 className=" uppercase">{currentChat?.username}</h2>
+      <div className="w-[66.5vw]   flex items-center  relative">
+        <div className="flex  gap-3   items-center mt-3 ml-5 mb-[0.56rem] ">
+          <img
+            src={`data:image/svg+xml;base64,${avataImage}`}
+            alt=""
+            className="h-[3rem]"
+          />
+          <h2 className=" uppercase">{username}</h2>
+        </div>
+        <div className="absolute right-3">
+          <Logout />
+        </div>
       </div>
+      <hr className="border-solid border-c3 border-b-[0.18rem] " />
     </div>
   );
 };

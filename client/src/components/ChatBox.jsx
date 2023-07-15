@@ -3,21 +3,19 @@ import ChatBoxheader from "./ChatBoxheader";
 import ChatBoxMessage from "./ChatBoxMessage";
 import ChatBoxInput from "./ChatBoxInput";
 
-const ChatBox = () => {
+const ChatBox = ({ currentChat }) => {
+  console.log(currentChat);
   return (
-    <div className="grid grid-flow-row gap-1 overflow-hidden">
-      <div className="h-[8.5vh]">
-        <ChatBoxheader />
-      </div>
-      <div className="h-[68vh]">
-        <ChatBoxMessage />
-      </div>
-      <div className="h-[8.5vh]">
-        <ChatBoxInput />
-      </div>
+    <div className="grid grid-flow-row  grid-rows-[11%,77%,12%]  h-full  w-full overflow-hidden">
+      <ChatBoxheader
+        username={currentChat.username}
+        avataImage={currentChat.avataImage}
+      />
+      <ChatBoxMessage />
+
+      <ChatBoxInput />
     </div>
   );
 };
 
 export default ChatBox;
-
