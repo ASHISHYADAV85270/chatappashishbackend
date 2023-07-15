@@ -44,8 +44,8 @@ const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
               );
             })}
           </div>
-          <div>
-            <div className="flex  gap-3 justify-center items-center  mt-2 ">
+          <div className="border-t-[0.2rem] border-c3 ">
+            <div className="flex  gap-3 justify-center items-center    mt-4">
               <img
                 src={`data:image/svg+xml;base64,${currentUserImage}`}
                 alt=""

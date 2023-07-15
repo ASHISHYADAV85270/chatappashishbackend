@@ -2,6 +2,8 @@ import express from "express";
 import cors from 'cors';
 import { config } from 'dotenv';
 import userRouter from './routes/userRouter.js';
+import messageRouter from './routes/messageRouter.js';
+
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 
@@ -22,3 +24,4 @@ app.use(
     })
 );
 app.use('/api/auth', userRouter);
+app.use('/api/messages', messageRouter);

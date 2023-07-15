@@ -3,6 +3,7 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
+import axios from "axios";
 
 export default function ChatBoxInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
@@ -26,18 +27,16 @@ export default function ChatBoxInput({ handleSendMsg }) {
   };
 
   return (
-    <Container className="flex   bg-black">
-      <div className="button-container  flex  items-center text-white gap-[1rem]  bg-purple-700 w-[5%] h-full">
+    <Container className="flex  w-full bg-[#ffffff34]   h-[10.2vh] overflow-hidden p-2">
+      <div className="button-container  flex  items-center text-white gap-[1rem]   w-[5%] h-full">
         <div className="emoji relative flex items-center justify-center">
           <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
-          {showEmojiPicker && (
-            <Picker onEmojiClick={handleEmojiClick} className="bg-[#080420]" />
-          )}
+          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
       <div className=" w-[95%] h-full">
         <form
-          className="  border-solid rounder-[2rem] flex items-center justify-center   h-full  bg-[#bf111134]"
+          className="  border-solid rounder-[2rem] flex items-center justify-center   h-full  "
           onSubmit={(event) => sendChat(event)}
         >
           <div className="h-full w-[95%]">
@@ -49,12 +48,17 @@ export default function ChatBoxInput({ handleSendMsg }) {
               className="w-[90%] h-[80%] rounded-[0.5rem] bg-transparent text-white border   selection:bg-[#9a86f3] focus:outline-none"
             />
           </div>
-          <div className="bg-orange-500 w-[10%]">
+          <div className=" w-[10%]">
             <button
               type="submit"
-              className="p-[0.3rem 2rem] border-[2rem]  bg-[#9a86f3] border-none"
+              className="p-[0.3rem 2rem] border-[2rem]   border-none"
             >
-              <IoMdSend size={"40px"} className="rounded-[3rem]" />
+              <span>
+                <IoMdSend
+                  size={"40px"}
+                  className="  text-black hover:text-c3"
+                />
+              </span>
             </button>
           </div>
         </form>

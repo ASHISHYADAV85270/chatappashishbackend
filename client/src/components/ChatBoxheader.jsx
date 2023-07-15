@@ -3,7 +3,7 @@ import Logout from "./Logout";
 
 const ChatBoxheader = ({ username, avataImage }) => {
   return (
-    <div>
+    <div className="overflow-hidden bg-[#ffffff34]">
       <div className="w-[66.5vw]   flex items-center  relative">
         <div className="flex  gap-3   items-center mt-3 ml-5 mb-[0.56rem] ">
           <img

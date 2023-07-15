@@ -63,7 +63,7 @@ const Chat = () => {
         <div className="text-black">Loading</div>
       ) : (
         <div className="h-[100vh] bg-c1 w-[100vw] flex flex-col justify-center  items-center toooop">
-          <div className=" h-[85vh] w-[85vw]  grid  grid-flow-col bg-c5 ">
+          <div className=" h-[85vh] w-[85vw]  grid  grid-flow-col bg-c5 overflow-hidden">
             <div className="w-[18.5vw] overflow-hidden">
               <Contacts
                 currcontacts={currcontacts}
@@ -71,11 +71,11 @@ const Chat = () => {
                 setCurrentChat={setCurrentChat}
               />
             </div>
-            <div className="w-[66.5vw]">
+            <div className="w-[66.5vw] overflow-hidden">
               {currentChat === undefined ? (
                 <Welcome currentUser={currentUser} />
               ) : (
-                <ChatBox currentChat={currentChat} />
+                <ChatBox currentChat={currentChat} currentUser={currentUser} />
               )}
             </div>
           </div>
