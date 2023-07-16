@@ -1,9 +1,7 @@
 import { app } from './app.js';
 import { connectDB } from './data/database.js';
 import { Server } from "socket.io";
-import cors from 'cors';
 connectDB();
-
 app.get('/', (req, res) => {
     res.json({
         success: true,
