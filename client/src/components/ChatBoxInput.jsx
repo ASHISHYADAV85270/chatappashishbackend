@@ -3,7 +3,6 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
-import axios from "axios";
 
 export default function ChatBoxInput({ handleSendMsg }) {
   const [msg, setMsg] = useState("");
@@ -12,9 +11,12 @@ export default function ChatBoxInput({ handleSendMsg }) {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
-  const handleEmojiClick = (event, emojiObject) => {
+  const handleEmojiClick = (emojiObject) => {
     let message = msg;
+    const { emoji } = emojiObject;
     message += emojiObject.emoji;
+
+    console.log("i am emoji", emoji);
     setMsg(message);
   };
 
@@ -27,7 +29,7 @@ export default function ChatBoxInput({ handleSendMsg }) {
   };
 
   return (
-    <Container className="flex  w-full bg-[#ffffff34]   h-[10.2vh] overflow-hidden p-2">
+    <Container className="flex  w-full bg-[#ffffff34]   h-[10.2vh]  p-2">
       <div className="button-container  flex  items-center text-white gap-[1rem]   w-[5%] h-full">
         <div className="emoji relative flex items-center justify-center">
           <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
@@ -77,7 +79,7 @@ const Container = styled.div`
     }
     .emoji-picker-react {
       position: absolute;
-      top: -350px;
+      bottom: 100%;
       background-color: #080420;
       box-shadow: 0 5px 10px #9a86f3;
       border-color: #9a86f3;

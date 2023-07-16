@@ -4,6 +4,7 @@ import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { loginuserurl } from "../utils/routes";
 const Login = () => {
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisable] = useState(false);
@@ -26,11 +27,10 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const url = "http://localhost:5000/api/auth/login";
       // console.log("i ma gh");
       const { username, useremail, userpassword } = user;
       let { data } = await axios.post(
-        url,
+        loginuserurl,
         {
           username,
           useremail,

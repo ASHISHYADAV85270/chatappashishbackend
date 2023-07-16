@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatBox from "../components/ChatBox";
+import { io } from "socket.io-client";
+import { settingusersurl, checkauthurl, host } from "../utils/routes";
 
 const Chat = () => {
   const navigate = useNavigate();
+  const socket = useRef();
   const [loading, setLoading] = useState(false);
   const [currcontacts, setcurrContacts] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
 
   /* for checking user is there or not*/
-  const authurl = "http://localhost:5000/api/auth/checkauth";
   const [currentUser, setCurruser] = useState(undefined);
   useEffect(() => {
     checkauth();
     async function checkauth() {
       try {
         setLoading(true);
-        const data = await axios.post(authurl, {}, { withCredentials: true });
+        const data = await axios.post(
+          checkauthurl,
+          {},
+          { withCredentials: true }
+        );
         if (data.data.success) {
           const username = data?.data?.user?.username;
           setCurruser(data.data.user);
@@ -44,16 +50,26 @@ const Chat = () => {
     async function settingusers() {
       if (currentUser) {
         if (currentUser.isAvataImageSet) {
-          const url = "http://localhost:5000/api/auth/allusers";
-          const data = await axios.get(`${url}/${currentUser._id}`, {
-            withCredentials: true,
-          });
+          const data = await axios.get(
+            `${settingusersurl}/${currentUser._id}`,
+            {
+              withCredentials: true,
+            }
+          );
           const otherusers = data.data.otherusers;
           setcurrContacts(otherusers);
         } else {
           navigate("/setAvatar");
         }
       }
+    }
+  }, [currentUser]);
+
+  /*socketio implementation*/
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
     }
   }, [currentUser]);
 
@@ -75,7 +91,11 @@ const Chat = () => {
               {currentChat === undefined ? (
                 <Welcome currentUser={currentUser} />
               ) : (
-                <ChatBox currentChat={currentChat} currentUser={currentUser} />
+                <ChatBox
+                  currentChat={currentChat}
+                  currentUser={currentUser}
+                  socket={socket}
+                />
               )}
             </div>
           </div>

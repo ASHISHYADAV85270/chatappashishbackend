@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import loader from "../assets/loader.gif";
 import { Buffer } from "buffer";
+import { setProfilePictureurl, checkauthurl } from "../utils/routes";
 function SetAvatar() {
   const api_route_for_images = "https://api.multiavatar.com/54433"; //for getting random images
-  const AVATARKEY = `?apikey=J5WSeU29gVFq16`;
   const navigate = useNavigate();
 
   // for setting avatar
@@ -20,14 +20,11 @@ function SetAvatar() {
         toast.error("Please Select a Avatar");
         return;
       }
-      const url = "http://localhost:5000/api/auth/setavatar";
       const data = await axios.post(
-        url,
+        setProfilePictureurl,
         { image: avatars[selectedAvatar] },
         { withCredentials: true } //to excess token and send token data to backend
       );
-      console.log("helllo bhaitw");
-      console.log(data.data);
       if (data.data.success) {
         toast.success(data.data.message);
         navigate("/");
@@ -42,11 +39,15 @@ function SetAvatar() {
   };
 
   /* for checking user is there or not*/
-  const authurl = "http://localhost:5000/api/auth/checkauth";
+
   const [currentUser, setCurruser] = useState(undefined);
   useEffect(() => {
     const checkauth = async () => {
-      const data = await axios.post(authurl, {}, { withCredentials: true });
+      const data = await axios.post(
+        checkauthurl,
+        {},
+        { withCredentials: true }
+      );
       if (data.data.success) {
         setCurruser(data.data.user);
       } else {
@@ -66,7 +67,7 @@ function SetAvatar() {
         for (let i = 0; i < 5; i++) {
           const x = Math.round(Math.random() * 1000);
           const avatarImage = await axios.get(
-            `${api_route_for_images}${x}${AVATARKEY}`
+            `${api_route_for_images}${x}${process.env.AVATARKEY}`
           );
           const buffer = new Buffer(avatarImage.data);
           const stringimagedata = buffer.toString("base64");

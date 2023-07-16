@@ -4,6 +4,7 @@ import { BiPowerOff } from "react-icons/bi";
 import styled from "styled-components";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
+import { logoutuserurl } from "../utils/routes";
 // import { logoutRoute } from "../utils/APIRoutes";
 export default function Logout() {
   const navigate = useNavigate();
@@ -13,8 +14,7 @@ export default function Logout() {
     e.preventDefault();
     setButtonDisable(true);
     try {
-      const url = "http://localhost:5000/api/auth/logoutuser";
-      let { data } = await axios.get(url, { withCredentials: true });
+      let { data } = await axios.get(logoutuserurl, { withCredentials: true });
       toast.success(data.message);
       return navigate("/login");
     } catch (error) {

@@ -4,6 +4,7 @@ import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { registeruserurl } from "../utils/routes";
 const Register = () => {
   const navigate = useNavigate();
   const [buttonDisabled, setButtonDisable] = useState(false);
@@ -39,9 +40,8 @@ const Register = () => {
     }
     setLoading(true);
     try {
-      const url = "http://localhost:5000/api/auth/register";
       const { username, useremail, userpassword } = user;
-      let { data } = await axios.post(url, {
+      let { data } = await axios.post(registeruserurl, {
         username,
         useremail,
         userpassword,
