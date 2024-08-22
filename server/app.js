@@ -12,7 +12,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 config({
-    path: "./data/config.env"
+    path: ".env"
 });
 
 // app.use(cors()); //jis sai dusrai server sai excess kr skai 
